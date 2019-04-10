@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>密碼驗證</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div id="app" v-cloak>
+
+        <h2>Password</h2>
+
+        <div class="password">
+            <input :class='{valid:passwordValidation.valid}' :type="passwordVisible ? 'text' : 'password'" v-model="password">
+            <button class="visibility" tabindex='-1' @click='togglePasswordVisibility' :arial-label='passwordVisible ? "Hide password" : "Show password"'>
+                <i class="material-icons">{{ passwordVisible ? "隱藏" : "顯示" }}</i>
+            </button>
+        </div>
+
+        <input type="password" v-model.lazy='checkPassword'>
+
+        <transition name="hint" appear>
+            <div v-if='passwordValidation.errors.length > 0 && !submitted' class='hints'>
+                <h2>提示</h2>
+                <p v-for='error in passwordValidation.errors'>{{error}}</p>
+            </div>
+        </transition>
+
+        <div class="matches" v-if='notSamePasswords'>
+            <p>密碼不符合</p>
+        </div>
+
+        <button @click='resetPasswords' v-if='passwordsFilled && !notSamePasswords && passwordValidation.valid'>
+            送出
+        </button>
+
+    </div>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js'></script>
+    <script src='all.js'>
+    </script>
+</body>
+
+</html>

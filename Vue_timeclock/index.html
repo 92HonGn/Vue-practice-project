@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="clock">
+        <p class="date">{{ date }}</p>
+        <p class="time">{{ time }}</p>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js'></script>
+    <script>
+        let vm = new Vue({
+            el: '#clock',
+            data: {
+                time: '',
+                data: ''
+            }
+        });
+
+        let week = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+        let timeId = setInterval(update, 1000);
+
+        function update() {
+            let D = new Date();
+            vm.time = zero(D.getHours(), 2) + ':' + zero(D.getMinutes(), 2) + ':' + zero(D.getSeconds(), 2);
+            vm.date = zero(D.getFullYear(), 4) + '/' + zero(D.getMonth() + 1, 2) + '-' + zero(D.getDate(), 2) + ' ' +
+                week[D.getDay()];
+        }
+
+        function zero(num, digit) {
+            let z = '';
+            for (let i = 0; i < digit; i++) {
+                z += '0';
+            }
+            return (z + num).slice(-digit);
+        }
+
+        update();
+    </script>
+</body>
+
+</html>

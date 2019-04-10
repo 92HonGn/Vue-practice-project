@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue.js-localstorage</title>
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="bg-dark wrapper">
+            <div class="dynamic-card mt-5">
+                <h1 class="h3 py-2 text-center">LOCAL TAPAS</h1>
+                <ul class="plates p-0 m-0" v-on:click="toggleDone">
+                    <li v-for="(plate, index) in $store.state.items" :key="plate.id">
+                        <input v-if="plate.done" type="checkbox" :data-index="index" :id="'item' + index" checked />
+                        <input v-else type="checkbox" :data-index="index" :id="'item' + index" />
+                        <label :for="'item' + index">{{ plate.text }}</label>
+                    </li>
+                </ul>
+                <b-form v-on:submit="addItem" class="form-tapas add-items">
+                    <b-input-group size="sm">
+                        <b-form-input type="text" name="item" placeholder="Item Name"></b-form-input>
+                        <b-input-group-append>
+                            <b-btn type="submit" variant="outline-primary">+ Add Item</b-btn>
+                        </b-input-group-append>
+                    </b-input-group>
+                </b-form>
+            </div>
+        </div>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.8/vue.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vuex/3.1.0/vuex.js'></script>
+    <script src="//unpkg.com/@babel/polyfill@latest/dist/polyfill.min.js"></script>
+    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+    <script src="all.js"></script>
+</body>
+
+</html>

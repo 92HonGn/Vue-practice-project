@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href='https://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="panels">
+            <div v-for="p in panels" class="panel" :class="[{ open: p.isOpen, 'open-active': p.isActive }, p.name]" @transitionend="toggleActive($event, p)" @click="toggleOpen(p)">
+                <p>{{ p.topWord }}</p>
+                <p>{{ p.middleWord }} </p>
+                <p>{{ p.bottomWord }}</p>
+            </div>
+        </div>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js'></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                panels: [{
+                    name: "panel1",
+                    topWord: "Hey",
+                    middleWord: "Let's",
+                    bottomWord: "Dance",
+                    isOpen: false,
+                    isActive: false
+                }, {
+                    name: "panel2",
+                    topWord: "Give",
+                    middleWord: "Take",
+                    bottomWord: "Receive",
+                    isOpen: false,
+                    isActive: false
+                }, {
+                    name: "panel3",
+                    topWord: "Experience",
+                    middleWord: "It",
+                    bottomWord: "Today",
+                    isOpen: false,
+                    isActive: false
+                }, {
+                    name: "panel4",
+                    topWord: "Give",
+                    middleWord: "All",
+                    bottomWord: "You can",
+                    isOpen: false,
+                    isActive: false
+                }, {
+                    name: "panel5",
+                    topWord: "Life",
+                    middleWord: "In",
+                    bottomWord: "Motion",
+                    isOpen: false,
+                    isActive: false
+                }]
+            },
+            methods: {
+                toggleOpen: function(panel) {
+                    panel.isOpen = !panel.isOpen
+                },
+                toggleActive: function(e, panel) {
+                    console.log(e.propertyName);
+                    if (e.propertyName.includes('flex')) {
+                        panel.isActive = !panel.isActive
+                    }
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>

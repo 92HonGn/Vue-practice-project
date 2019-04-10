@@ -1,0 +1,103 @@
+body {
+    padding: 1em;
+    background-color: orange;
+    color: #D4DEDF;
+}
+
+[v-cloak] {
+    opacity: 0;
+}
+
+#app {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.hints {
+    max-width: 400px;
+    padding: 1em;
+    background: whitesmoke;
+    margin: 1em 0;
+    font-size: .9em;
+    color: #4d6567;
+}
+
+.hints h2 {
+    margin: .5em 0 .2em 0;
+}
+
+.hints p {
+    margin: 0;
+    padding-left: 1em;
+}
+
+.hints p::before {
+    content: ">";
+    font-size: .9em;
+    margin-right: 6px;
+    display: inline-block;
+}
+
+.visibility {
+    all: unset;
+    background: rgb(250, 180, 3);
+    display: inline-block;
+    color: rgb(31, 242, 49);
+    padding: 2px .4em 0;
+    vertical-align: center;
+}
+
+.material-icons {
+    font-size: 1.5em;
+}
+
+.password {
+    display: flex;
+    align-items: center;
+}
+
+input,
+button {
+    padding: 6px;
+}
+
+input+button {
+    font-size: .85em;
+}
+
+[type=password],
+[type=text] {
+    color: rgb(14, 213, 232);
+    border: 1px solid transparent;
+    background: #f2360c;
+    margin: 6px 10px 6px 0;
+}
+
+[type=password].valid,
+[type=text].valid {
+    border: 1px solid rgb(0, 255, 42);
+}
+
+[type=password] {
+    letter-spacing: .2em;
+}
+
+.hint-enter {
+    opacity: 0;
+    -webkit-transform: translate3d(-20px, 0, 0);
+    transform: translate3d(-20px, 0, 0);
+}
+
+.hint-leave-to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 20px, 0);
+    transform: translate3d(0, 20px, 0);
+}
+
+.hint-enter-active {
+    transition: 300ms;
+}
+
+.hint-leave-active {
+    transition: 400ms;
+}

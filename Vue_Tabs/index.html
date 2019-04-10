@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>頁籤</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <tabs>
+                        <div slot="tabwrap">
+                            <tab name="goods" text="Product1" v-bind:selected="true">
+                                <div slot="tabinner">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img src="https://picsum.photos/200/300" alt="" class="img">
+                                            <div>
+                                                <h5>lorem</h5>
+                                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Excepturi, ad.
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <img src="https://picsum.photos/200/300" alt="" class="img">
+                                            <div>
+                                                <h5>lorem2</h5>
+                                                <p>Lorem ipsum dolor sit amet.</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab name="openBox" text="Product2">
+                                <div slot="tabinner">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img src="https://picsum.photos/200/300/?random" alt="" class="img">
+                                            <div>
+                                                <h5>dkfmaldk</h5>
+                                                <p>adfqreqr</p>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <img src="https://picsum.photos/200/300/?random" alt="" class="img">
+                                            <div>
+                                                <h5>ererqer</h5>
+                                                <p>qerqerer33</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </tab>
+                            <tab name="DM" text="Product3">
+                                <div slot="tabinner">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img src="https://picsum.photos/200/300/?random" alt="" class="img">
+                                            <div>
+                                                <h5>adfaf</h5>
+                                                <p>adfadf</p>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <img src="https://picsum.photos/200/300/?random" alt="" class="img">
+                                            <div>
+                                                <h5>adfaf</h5>
+                                                <p>adfafadf</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </tab>
+                        </div>
+                    </tabs>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.js'></script>
+    <script src="all.js"></script>
+</body>
+
+</html>

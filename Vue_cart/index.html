@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>簡易購物車</title>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css' />
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-6 produclist">
+                    <h1>products</h1>
+                    <input type="text" v-model="search">
+                    <button v-on:click='sortit("name")'>name</button>
+                    <div v-for='product in products | filterBy search in "name" | orderBy para order' class="col-md-12">
+                        {{product.name | capitalize}}
+                        <ul>
+                            <li v-for='opts in product.options'>
+                                {{opts.details}}{{opts.price | currency}}
+                                <button class="btn btn-success btn-xs" v-on:click='addItem(product,opts)'>+</button>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 chartlist">
+                    <h1>shopping cart</h1>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4">
+                            數量價格
+                        </div>
+                        <div class="col-xs-12 col-sm-5">
+                            名稱
+                        </div>
+                        <div class="col-xs-12 col-sm-3 text-right">
+                            小計
+                        </div>
+                    </div>
+
+                    <div class="row" v-for='product in shopping_cart'>
+                        <div class="col-xs-12 col-sm-4">
+                            {{product.quantity}} @ {{product.price | currency}}
+                        </div>
+                        <div class="col-xs-12 col-sm-5">
+                            {{product.listitem}}
+                        </div>
+                        <div class="col-xs-12 col-sm-3 text-right">
+                            <small>{{product | subvalue | currency}}</small>
+                        </div>
+                    </div>
+
+                    <div class="row total">
+                        <div class="col-xs-12 col-sm-4">count:{{count}}</div>
+                        <div class="col-xs-12 col-sm-8">total:{{total | currency}}</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div v-for='opt in shopping_cart' class="col-sm-12 showcode">{{opt | json}}</div>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.js'></script>
+    <script src="all.js"></script>
+</body>
+
+</html>

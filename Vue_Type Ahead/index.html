@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Type Ahead 👀</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Use Vue from a CDN -->
+    <script src="https://unpkg.com/vue"></script>
+</head>
+
+<body>
+    <div id="app">
+        <form class="search-form">
+
+            <input type="text" class="search" placeholder="City or State" v-model="searchValue">
+
+            <ul class="suggestions">
+                <!--判斷是否有搜尋值-->
+                <template v-if="searchValue">
+                    <li v-for="match in displayMatches" :key="match.rank">
+
+                        <!--v-for的key使用原因-->
+                        <!--https://juejin.im/post/5aae19aa6fb9a028d4445d1a-->
+                        <span class="name" v-html="match.name"></span>
+                        <span class="population">{{match.population}}</span>
+
+                    </li>
+                </template>
+
+                <template v-else>
+                    <li>Filter for a city</li>
+                    <li>or a state</li>
+                </template>
+
+            </ul>
+
+        </form>
+    </div>
+
+    <!-- Vue Instance Section -->
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                //存放資料綁定資訊
+                endpoint: 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json',
+                cities: [],
+                searchValue: ''
+            },
+            computed: {
+                findMatches: function() {
+                    return this.cities.filter(place => {
+
+                        const regex = new RegExp(this.searchValue, 'gi');
+                        //正規化韓式宣告
+
+                        return place.city.match(regex) || place.state.match(regex)
+                            //根據回傳值true或false 來決定是否丟棄該元素。
+                            //https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Regular_Expressions
+                    })
+                },
+                displayMatches: function() {
+
+                    //https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+                    return this.findMatches.map(place => {
+                        const regex = new RegExp(this.searchValue, 'gi')
+
+                        //https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/String/replace
+                        const cityName = place.city.replace(regex,
+                                `<span class="hl">${this.searchValue}</span>`) //經過正規化轉換span標籤
+
+                        const stateName = place.state.replace(regex,
+                            `<span class="hl">${this.searchValue}</span>`)
+
+                        return {
+                            rank: place.rank,
+                            name: `${cityName}, ${stateName}`,
+                            population: this.numberWithCommas(place.population)
+                                //displayMatches 回傳所要的資訊。
+                        }
+                    })
+                }
+            },
+            methods: {
+                numberWithCommas: function(x) {
+
+                    //x傳入是數字 轉換成字串,加入進位符號
+                    return x.toString().replace(/ \B (?=(\d{3})+(?!\d)) /g, ',')
+                        //\B 匹配 , /g全局搜索, x(?=y)符合'x'，且後接的是'y'。'y'為'x'存在的意義。
+                        //\d{3} 吻合數字，寫法等同於 [0-9] 。
+                        //x(?!y)符合'x'，且後接的不是'y'。'y'為否定'x'存在的意義，後面不行前功盡棄(negated lookahead)。例如： /\d+(?!\.)/ ，要找一個或多個數字時，在後面接的不是「點」的情況下成立。
+                        // replace 取代點 輸出回字串
+                        //https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide/Regular_Expressions
+                }
+            },
+            mounted: function() {
+                fetch(this.endpoint)
+                    .then(blob => blob.json())
+                    .then(data => this.cities.push(...data))
+                    //https://ithelp.ithome.com.tw/articles/10194107
+                    //https://ithelp.ithome.com.tw/articles/10200290?sc=iThelpR
+            }
+        })
+    </script>
+
+</body>
+
+</html>

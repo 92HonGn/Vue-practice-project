@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    position: relative;
+    width: 100%;
+}
+
+.dynamic-card {
+    background: rgba(255, 255, 255, 0.95);
+    margin: auto;
+    max-width: 330px;
+    padding: 15px;
+    width: 100%;
+}
+
+.plates li {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    display: flex;
+    font-weight: 100;
+    padding: 10px 0;
+}
+
+.plates label {
+    cursor: pointer;
+    flex: 1;
+}
+
+.plates input {
+    display: none;
+}
+
+.plates input+label:before {
+    content: '⬜️';
+    margin-right: 10px;
+}
+
+.plates input:checked+label:before {
+    content: 'V';
+}
+
+.add-items {
+    margin-top: 20px;
+}
+
+.add-items input {
+    padding: 10px;
+    outline: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}

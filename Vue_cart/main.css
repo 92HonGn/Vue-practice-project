@@ -1,0 +1,12 @@
+.chartlist .row {
+    border: 1px solid #aaa;
+}
+
+.chartlist .total {
+    background-color: #999;
+    color: #fff;
+}
+
+.showcode {
+    font-size: 30px;
+}

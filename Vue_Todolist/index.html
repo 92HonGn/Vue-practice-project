@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .todo__container {
+            width: 50%;
+            height: auto;
+            margin: 20px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            border-radius: 3px;
+            background-color: white;
+            -webkit-box-shadow: 0px 2px 3px 0px rgba(71, 76, 85, 0.562);
+            -moz-box-shadow: 0px 2px 3px 0px rgba(71, 76, 85, 0.562);
+            box-shadow: 0px 2px 3px 0px rgba(71, 76, 85, 0.562);
+        }
+        
+        .todo__header {
+            display: flex;
+            padding: 20px;
+            flex-direction: row;
+            border-bottom: 1px solid #c0c0c07e;
+        }
+        
+        .todo__form {
+            display: flex;
+            width: 100%;
+            flex-direction: row;
+        }
+        
+        .todo__form input[type=text] {
+            flex-grow: 1;
+            width: auto;
+            background-color: white;
+            border: 0;
+            padding: 10px;
+            font-size: 1.2em;
+        }
+        
+        .completed {
+            text-decoration: line-through;
+            color: #20ec97;
+        }
+        
+        .todo__form input[type=submit] {
+            background-color: rgba(5, 219, 183, 0.89);
+            border-radius: 3px;
+            border: 0px;
+            padding: 10px 15px 10px 15px;
+            font-size: 1em;
+            color: white;
+            -webkit-box-shadow: 0px 5px 5px 0px rgba(13, 141, 130, 0.2);
+            -moz-box-shadow: 0px 5px 5px 0px rgba(13, 141, 130, 0.2);
+            box-shadow: 0px 5px 5px 0px rgba(13, 141, 130, 0.2);
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .todo__form input[type=submit]:hover {
+            transform: scale(1.1, 1.1);
+        }
+        
+        .todo__form input[type=submit]:active {
+            transform: scale(0.8, 0.8);
+        }
+        
+        .todo__items {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+        }
+        
+        .todo__item {
+            display: flex;
+            flex-direction: row;
+            padding: 20px;
+            border-bottom: 1px solid #c0c0c07e;
+        }
+        
+        .todo__item:hover {
+            background-color: #9bf0c848;
+        }
+        
+        .todo__item .title {
+            margin: 0px 0px 0px 20px;
+            font-size: 1.2em;
+        }
+        
+        .todo__item .check-box {
+            font-size: 1.2em;
+        }
+        
+        @media (min-width: 1281px) {
+            .todo__container {
+                width: 50%;
+                height: auto;
+                margin: 20px;
+            }
+        }
+        
+        @media (min-width: 1025px) and (max-width: 1280px) {
+            .todo__container {
+                width: 50%;
+                height: auto;
+                margin: 20px;
+            }
+        }
+        
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .todo__container {
+                width: 70%;
+                height: auto;
+                margin: 20px;
+            }
+        }
+        
+        @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+            .todo__container {
+                width: 50%;
+                height: auto;
+                margin: 20px;
+            }
+        }
+        
+        @media (min-width: 481px) and (max-width: 767px) {
+            .todo__container {
+                width: 100%;
+                height: auto;
+                margin: 0px;
+            }
+            .todo__header {
+                padding: 20px 10px 20px 10px;
+            }
+            .todo__tem {
+                padding: 20px 10px 20px 10px;
+            }
+        }
+        
+        @media (min-width: 320px) and (max-width: 480px) {
+            .todo__container {
+                width: 100%;
+                height: auto;
+                margin: 0px;
+            }
+            .todo__header {
+                padding: 10px;
+            }
+            .todo__tem {
+                padding: 20px 10px 20px 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="container">
+        <div class="todo__container">
+            <div class="todo__header">
+                <todo__form @todo__created="addTodo"></todo__form>
+            </div>
+        </div>
+        <div class="todo__items">
+            <todo__item @todo__completed="completedTodo" v-for="item in filterTodo" :todo="item" :key="item.id">
+            </todo__item>
+        </div>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js'></script>
+    <script>
+        //$emit子曾元件傳到父層
+        Vue.component('todo__form', {
+            data() {
+                return {
+                    newTodo: ''
+                }
+            },
+            methods: {
+                todoEvent() {
+                    this.$emit('todo__created', this.newTodo);
+                    this.newTodo = '';
+                }
+            },
+            template: `
+             <form
+                class="todo__form"
+                @submit.prevent="todoEvent">
+                <input 
+                    class="todo__text"
+                    type="text"
+                    v-model="newTodo"
+                    placeholder="add a new todo"/>
+                <input
+                    class="todo__submit"
+                    type="submit"
+                    value="ADD"/>
+             </form>
+            `
+        });
+
+        Vue.component('todo__item', {
+            props: ['todo'],
+            methods: {
+                todoEvent() {
+                    this.$emit('todo__completed', this.todo);
+                    console.log(this.todo.id);
+                }
+            },
+            template: `
+                <div
+                    class="todo__item"
+                    @click="todoEvent">
+                    <span
+                        class="title"
+                        :class="{completed:todo.checked}">
+                        {{todo.text}}
+                    </span>
+                </div>
+            `
+        });
+
+        new Vue({
+            el: '#app',
+            data: {
+                todoList: []
+            },
+            computed: {
+                filterTodo() {
+                    this.todoList.sort(function(a, b) {
+                        return a.checked === b.checked ? 0 : a.checked ? 1 : -1;
+                    })
+                    return this.todoList;
+                }
+            },
+            methods: {
+                addTodo(todo) {
+                    if (todo && todo.length > 0) {
+                        this.todoList.push({
+                            id: this.todoList.length + 1,
+                            text: todo,
+                            checked: false
+                        })
+                    }
+                },
+                completedTodo(todo) {
+                    todo.checked = !todo.checked;
+                }
+            }
+        });
+    </script>
+    <script>
+    </script>
+</body>
+
+</html>

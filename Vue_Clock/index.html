@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue clock</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div id="app" class="clock">
+        <div class="clock-panel">
+            <div class="hand hour-hand" :style="rotateHand(hourDegress)"></div>
+            <div class="hand min-hand" :style="rotateHand(minsDegrees)"></div>
+            <div class="hand second-hand" :style="rotateHand(secondsDegrees)"></div>
+        </div>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.6/vue.js'></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                secondsDegrees: 0,
+                minsDegrees: 0,
+                hourDegress: 0
+            },
+            mounted: function() {
+                setInterval(this.setTime, 1000)
+            },
+            methods: {
+                rotateHand: function(D) {
+                    return {
+                        transform: `rotate(${D}deg)`
+                    }
+                },
+                setTime: function() {
+                    const now = new Date();
+
+                    const seconds = now.getSeconds()
+                    this.secondsDegrees = ((seconds / 60) * 360) + 90
+
+                    const mins = now.getMinutes();
+                    this.minsDegrees = ((mins / 60) * 360) + ((seconds / 60) * 6) + 90
+
+                    const hour = now.getHours();
+                    this.hourDegress = ((hour / 12) * 360) + ((mins / 60) * 30) + 90
+
+                },
+            },
+        })
+    </script>
+</body>
+
+</html>

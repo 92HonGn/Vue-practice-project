@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div id="app" class="container">
+        <h2 class="col-sm-12">動態資料查詢</h2>
+        <div class="search-form">
+            <div class="search-label col-sm-3">
+                <label for="">關建字</label>
+            </div>
+            <div class="search-input col-sm-9">
+                <input class="form-control" v-model="filter" placeholder="輸入過濾字串" />
+            </div>
+        </div>
+        <div class="total-data col-sm-12">共有 {{ filteredPost.length }} 篇文章</div>
+        <div class="row">
+            <postbox :post="p" v-for="p in filteredPost"></postbox>
+        </div>
+
+    </div>
+
+    <template id="post">
+        <div class="postbox col-sm-4">
+            <div class="postbox_inner">
+                <div class="img" :style="covercss"></div>
+                <h6 v-html="post.name_short"></h6>
+                <h4 v-html="post.title"></h4>
+                <p v-html="post.description"></p>
+            </div>
+        </div>
+    </template>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js'></script>
+    <script src="all.js"></script>
+</body>
+
+</html>
